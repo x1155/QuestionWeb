@@ -6,11 +6,9 @@ package utils;
  *     2.受测评对象的测评项有一项不称职，总评即为不称职；
  *     3.对受测评对象总评为优秀的不超过80%。 
  */
-public class FindInvalidVote {
-	//测评结果是否合法标识
-	private static enum Mark {VALID, INVALID};
+public class FindInvalidVote {	
 	
-	public int isValidVote(String voteResults){
+	public boolean isValidVote(String voteResults){
 		//传入结果形式            "02……120#11……000#……#" 注：#分割各受测评对象的成绩。	
 		
 		//截取对单个人的测评结果
@@ -31,17 +29,17 @@ public class FindInvalidVote {
 			}
 			
 			if(strs[i].charAt(Len-1) == '0') { 
-				//规则2
-				if(num_Exellent/((Len-1)*1.0) < 0.9) { return Mark.INVALID.ordinal(); }
+				//规则1
+				if(num_Exellent/((Len-1)*1.0) < 0.9) { return false; }
 				toltal_num_Exellent++; 
 			}
 			//规则2
-			if((num_Inept > 0) && (strs[i].charAt(Len-1) != '2')) { return Mark.INVALID.ordinal(); }
+			if((num_Inept > 0) && (strs[i].charAt(Len-1) != '2')) { return false; }
 		}		
 		//规则3
-		if(toltal_num_Exellent/(strs[0].length()*1.0) > 0.8) { return Mark.INVALID.ordinal(); }
+		if(toltal_num_Exellent/(strs[0].length()*1.0) > 0.8) { return false; }
 		
 		//合法票
-		return Mark.VALID.ordinal();
+		return true;
 	}
 }
