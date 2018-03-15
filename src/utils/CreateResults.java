@@ -17,8 +17,7 @@ public class CreateResults {
 		//初始化结果矩阵，results.get(i)表示 第i个参加测评人对测评结果。
 		//注：两个测评对象的测评结果用 '#'号隔开，如："02……120#11……000#……#"。
 		results = new ArrayList<Result>();
-		Random random = new Random();
-		
+		Random random = new Random();		
 		
 		for(int i=0; i<T_NUM; i++){
 			Result r = new Result();
@@ -26,7 +25,7 @@ public class CreateResults {
 			for(int j=0; j<P_NUM; j++){				
 				for(int k=0; k<Q_NUM; k++)
 				{
-					str.append(random.nextInt(C_NUM-1));					
+					str.append(random.nextInt(C_NUM));					
 				}
 				str.append('#');
 			}
@@ -34,7 +33,7 @@ public class CreateResults {
 			r.setId(String.valueOf(i));
 			r.setScoreStr(str.toString());
 			results.add(r);
-		}
+		}		
 		
 		return results;
 	}	

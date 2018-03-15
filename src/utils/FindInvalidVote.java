@@ -14,18 +14,22 @@ public class FindInvalidVote {
 		//截取对单个人的测评结果
 		String[] strs = voteResults.trim().split("#");		
 		
-		// Len：总的测评项数； num_Exellent：受测评对象测评项为优秀的数量；num_Inept：受测评对象测评项为不称职的数量；
-		// toltal_num_Exellent：全体受测评对象总评为优秀的数量。
-		int Len = strs[0].length();
-		int num_Exellent = 0;
-		int num_Inept = 0;
+		// Len：总的测评项数；toltal_num_Exellent：全体受测评对象总评为优秀的数量。		
+		int Len = strs[0].length();		
 		int toltal_num_Exellent = 0;
 		
 		//对规则前两项进行判断
 		for(int i=0; i<strs.length; i++){
+			//num_Exellent：受测评对象测评项为优秀的数量；num_Inept：受测评对象测评项为不称职的数量；
+			int num_Exellent = 0;
+			int num_Inept = 0;
+			
 			for(int j=0; j<Len-1; j++){
-				if(strs[i].charAt(j) == '0') { num_Exellent++; }							
-				if(strs[i].charAt(j) == '2') { num_Inept++; }					
+				if(strs[i].charAt(j) == '0') { 
+					num_Exellent++; 
+				}else if(strs[i].charAt(j) == '2') { 
+					num_Inept++;
+				}					
 			}
 			
 			if(strs[i].charAt(Len-1) == '0') { 
@@ -37,8 +41,9 @@ public class FindInvalidVote {
 			if((num_Inept > 0) && (strs[i].charAt(Len-1) != '2')) { return false; }
 		}		
 		//规则3
-		if(toltal_num_Exellent/(strs[0].length()*1.0) > 0.8) { return false; }
+		if(toltal_num_Exellent/(strs.length*1.0) > 0.8) { return false; }
 		
+		System.out.println("有效票：" + voteResults);
 		//合法票
 		return true;
 	}
